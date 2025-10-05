@@ -523,9 +523,14 @@ def RunNormalMode(all_movies):
             if movie != all_movies[-1] and Cfg().crawler.sleep_after_scraping > Duration(0):
                 time.sleep(Cfg().crawler.sleep_after_scraping.total_seconds())
             return_movies.append(movie)
-        # except Exception as e:
-        #     logger.debug(e, exc_info=True)
-        #     logger.error(f'整理失败: {e}')
+        except Exception as e:
+            logger.debug(e, exc_info=True)
+            logger.error(f'整理失败: {e}')
+            if Cfg().scanner.exit_if_fail:
+                logger.error('整理失败，程序退出')
+                break
+            else:
+                logger.error('已跳过该影片，继续处理下一部')
         finally:
             inner_bar.close()
     return return_movies

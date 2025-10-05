@@ -17,6 +17,7 @@ class Scanner(BaseConfig):
     minimum_size: ByteSize
     skip_nfo_dir: bool
     manual: bool
+    exit_if_fail: bool = True
 
 class CrawlerID(str, Enum):
     airav = 'airav'
